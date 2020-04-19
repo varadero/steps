@@ -19,7 +19,7 @@
         </div>
 
         <div class="steps-templates">
-            <div step-name="genderStep" step-text="Gender" step-controller="ClickableItemsController"
+            <div step-name="genderStep" step-text="Пол" step-controller="ClickableItemsController"
                 class="step gender-step clickable-items-step">
                 <div step-clickable-item step-clickable-item-data='{"selected": "female"}'
                     step-clickable-item-goes-to-step="femaleStep" class="clickable-item">
@@ -33,7 +33,7 @@
                 </div>
             </div>
 
-            <div step-name="femaleStep" step-text="Female" step-controller="ClickableItemsController"
+            <div step-name="femaleStep" step-text="Дамски" step-controller="ClickableItemsController"
                 class="step female-step clickable-items-step">
                 <div step-clickable-item step-clickable-item-data='{"selected": "bluzi"}'
                     step-clickable-item-goes-to-step="searchStep" class="clickable-item">
@@ -47,12 +47,36 @@
                 </div>
             </div>
 
-            <div step-name="maleStep" step-text="Male" step-controller="ClickableItemsController"
+            <div step-name="maleStep" step-text="Мъжки" step-controller="ClickableItemsController"
                 class="step male-step clickable-items-step">
-                <div step-clickable-item step-clickable-item-data='{"selected": "bluzi"}'
+                <div step-clickable-item step-clickable-item-data='{"selected": "gashti"}'
                     step-clickable-item-goes-to-step="searchStep" class="clickable-item">
-                    <img step-clickable-item-image src="assets/images/.svg" class="clickable-item-image" />
-                    <span step-clickable-item-text>Мъжки блузи</span>
+                    <img step-clickable-item-image src="assets/images/pants.svg" class="clickable-item-image" />
+                    <span step-clickable-item-text>Гащи</span>
+                </div>
+                <div step-clickable-item step-clickable-item-data='{"selected": "vryhna-dreha"}'
+                    step-clickable-item-goes-to-step="maleOutdoorStep" class="clickable-item">
+                    <img step-clickable-item-image src="assets/images/jacket.svg" class="clickable-item-image" />
+                    <span step-clickable-item-text>Връхна дреха</span>
+                </div>
+            </div>
+
+            <div step-name="maleOutdoorStep" step-text="Връхна дреха" step-controller="ClickableItemsController"
+                class="step male-step clickable-items-step">
+                <div step-clickable-item step-clickable-item-data='{"selected": "jacket"}'
+                    step-clickable-item-goes-to-step="searchStep" class="clickable-item">
+                    <img step-clickable-item-image src="assets/images/jacket.svg" class="clickable-item-image" />
+                    <span step-clickable-item-text>Яке</span>
+                </div>
+                <div step-clickable-item step-clickable-item-data='{"selected": "coat"}'
+                    step-clickable-item-goes-to-step="searchStep" class="clickable-item">
+                    <img step-clickable-item-image src="assets/images/coat.svg" class="clickable-item-image" />
+                    <span step-clickable-item-text>Сако</span>
+                </div>
+                <div step-clickable-item step-clickable-item-data='{"selected": "vest"}'
+                    step-clickable-item-goes-to-step="searchStep" class="clickable-item">
+                    <img step-clickable-item-image src="assets/images/vest.svg" class="clickable-item-image" />
+                    <span step-clickable-item-text>Елек</span>
                 </div>
             </div>
 
