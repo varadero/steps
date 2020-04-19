@@ -2,12 +2,16 @@
     display: none !important;
 }
 
-.steps .breadcrumb {
+.steps-breadcrumb {
     display: flex;
     flex-direction: row;
 }
 
-.steps .breadcrumb .steps-breadcrumb-item-separator {
+.steps-breadcrumb-item-text {
+    cursor: pointer;
+}
+
+.steps-breadcrumb-item-separator {
     padding-left: 0.5em;
     padding-right: 0.5em;
 }

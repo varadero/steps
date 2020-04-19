@@ -64,6 +64,39 @@
             this.domHelper.setAttr(element, 'steps-breadcrumb-item-step-name', stepName);
             const itemTextEl = this.domHelper.queryOne(element, '[steps-breadcrumb-item-text]');
             this.domHelper.setText(itemTextEl, text);
+            element.addEventListener('click', event => this.onBreadcrumbStepClick(event.currentTarget));
+        }
+
+        onBreadcrumbStepClick(element) {
+            const stepName = this.domHelper.getAttr(element, 'steps-breadcrumb-item-step-name');
+            this.shownBreadcrumbStepNames = this.getBreadcrumbStepsNamesUntil(stepName);
+            this.showBreadcrumbSteps(this.shownBreadcrumbStepNames);
+            this.cleanUpDataObject();
+            this.showStep(stepName);
+        }
+
+        getBreadcrumbStepsNamesUntil(stepName) {
+            let result = [];
+            for (const step of this.shownBreadcrumbStepNames) {
+                result.push(step);
+                if (step === stepName) {
+                    break;
+                }
+            }
+            return result;
+        }
+
+        cleanUpDataObject() {
+            // Leave only these items in the data object which are part of breadcrumb path
+            // This is needed in case some previous step is selected while the data object
+            // already contains the data for a step that was discarded
+            const objectKeys = Object.keys(this.stepsDataObject);
+            for (const key of objectKeys) {
+                if (this.shownBreadcrumbStepNames.indexOf(key) === -1) {
+                    // This key does not exist in the breadcrumb - remove it from object
+                    delete this.stepsDataObject[key];
+                }
+            }
         }
 
         /**
@@ -247,9 +280,8 @@
      * Manages simple step which contains clickable items
      */
     class ClickableItemsController {
-        stepName = '';
         init(containerEl, data, stepCompletedCallback) {
-            this.stepName = containerEl.getAttribute('step-name');
+            const stepName = containerEl.getAttribute('step-name');
             // Attach to click event of the clickable elements so we can detect which item was clicked
             const clickableItemsEls = containerEl.querySelectorAll('[step-clickable-item]');
             clickableItemsEls.forEach(el => {
@@ -269,7 +301,39 @@
      */
     class SearchBrandController {
         init(containerEl, data, stepCompletedCallback) {
-            //
+            const stepName = containerEl.getAttribute('step-name');
+            const inputEl = containerEl.querySelector('[step-search-brand-input]');
+            inputEl.addEventListener('input', async event => {
+                const textToSearch = event.target.value;
+                if (!textToSearch) {
+                    // Clear results
+                } else {
+                    const searchResult = await this.performSearch(textToSearch);
+                    if (searchResult.ok) {
+                        // Normal response from server
+                    } else {
+                        // Some error occureds
+                    }
+                }
+            });
+        }
+
+        showSearchReults() {
+        }
+
+        clearSearchResults() {
+            // TODO: Remove all search elements but first one (we need to keep it as a template)
+        }
+
+        performSearch(text) {
+            const bodyObj = {
+                searchText: text
+            };
+            return fetch('url-to-server-page-for-search.php', {
+                method: 'POST',
+                body: JSON.stringify(bodyObj),
+                headers: { 'Content-Type': 'application/json' }
+            });
         }
     }
 

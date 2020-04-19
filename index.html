@@ -11,9 +11,9 @@
 <body>
 
     <div steps-container="clothesSteps" class="steps clothes-steps-container">
-        <div steps-breadcrumb class="breadcrumb">
+        <div steps-breadcrumb class="steps-breadcrumb">
             <div steps-breadcrumb-item>
-                <span steps-breadcrumb-item-text></span>
+                <span steps-breadcrumb-item-text class="steps-breadcrumb-item-text"></span>
                 <span steps-breadcrumb-item-separator class="steps-breadcrumb-item-separator">&gt;</span>
             </div>
         </div>
@@ -63,8 +63,14 @@
             </div>
 
             <div step-name="searchStep" step-text="Search brand" step-controller="SearchBrandController"
-                class="step male-step clickable-items-step">
-                <span>Search for brand</span>
+                class="step search-brand-step clickable-items-step">
+                <div>
+                    <div>
+                        <input step-search-brand-input placeholder="Име на марка" />
+                    </div>
+                    <div step-search-brand-search-results class="step-search-brand-search-results">
+                    </div>
+                </div>
             </div>
         </div>
     </div>
