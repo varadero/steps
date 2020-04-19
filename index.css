@@ -1,0 +1,30 @@
+.steps-hidden {
+    display: none !important;
+}
+
+.steps .breadcrumb {
+    display: flex;
+    flex-direction: row;
+}
+
+.steps .breadcrumb .steps-breadcrumb-item-separator {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+}
+
+.clickable-items-step {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.clickable-items-step .clickable-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+
+.clickable-items-step .clickable-item .clickable-item-image {
+    width: 100px;
+}
