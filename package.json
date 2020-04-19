@@ -1,0 +1,24 @@
+{
+  "name": "steps",
+  "version": "1.0.0",
+  "description": "",
+  "main": "steps.js",
+  "scripts": {
+    "build": "tsc",
+    "tslint": "tslint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/varadero/steps.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/varadero/steps/issues"
+  },
+  "homepage": "https://github.com/varadero/steps#readme",
+  "devDependencies": {
+    "tslint": "^6.1.1",
+    "typescript": "^3.8.3"
+  }
+}
