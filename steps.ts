@@ -223,7 +223,7 @@
             this.showStep(nextStepName);
             this.shownBreadcrumbStepNames.push(nextStepName);
             this.showBreadcrumbSteps(this.shownBreadcrumbStepNames);
-            console.log(stepName, stepData, nextStepName, this.stepsDataObject);
+            // this.stepsDataObject contains collected data from all completed steps
         }
 
         createControllerInstance(controllerName: string): any {
