@@ -312,13 +312,13 @@
                     if (searchResult.ok) {
                         // Normal response from server
                     } else {
-                        // Some error occureds
+                        // Some error occured
                     }
                 }
             });
         }
 
-        showSearchReults() {
+        showSearchResults() {
         }
 
         clearSearchResults() {

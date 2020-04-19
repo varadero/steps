@@ -5,6 +5,7 @@
 .steps-breadcrumb {
     display: flex;
     flex-direction: row;
+    margin-bottom: 2em;
 }
 
 .steps-breadcrumb-item-text {
