@@ -300,21 +300,28 @@
      * Manages search brand step
      */
     class SearchBrandController {
+        searchPath;
         init(containerEl, data, stepCompletedCallback) {
             const stepName = containerEl.getAttribute('step-name');
+            this.searchPath = containerEl.getAttribute('step-search-brand-search-path');
             const inputEl = containerEl.querySelector('[step-search-brand-input]');
             inputEl.addEventListener('input', async event => {
                 const textToSearch = event.target.value;
                 if (!textToSearch) {
                     // Clear results
                 } else {
-                    const searchResult = await this.performSearch(textToSearch);
+                    const searchResult = await this.performSearch(this.searchPath, textToSearch);
                     if (searchResult.ok) {
                         // Normal response from server
                     } else {
                         // Some error occured
                     }
                 }
+            });
+
+            const addBtnEl = containerEl.querySelector('[step-search-brand-add]');
+            addBtnEl.addEventListener('click', async event => {
+                // TODO: Add button was clicked
             });
         }
 
@@ -325,11 +332,12 @@
             // TODO: Remove all search elements but first one (we need to keep it as a template)
         }
 
-        performSearch(text) {
+        performSearch(path, text) {
+            // TODO: Construct real search object for the server and use correct url (it can be provided in the HTML template)
             const bodyObj = {
                 searchText: text
             };
-            return fetch('url-to-server-page-for-search.php', {
+            return fetch(path, {
                 method: 'POST',
                 body: JSON.stringify(bodyObj),
                 headers: { 'Content-Type': 'application/json' }
