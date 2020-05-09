@@ -35,6 +35,9 @@
             this.showBreadcrumbSteps(this.shownBreadcrumbStepNames);
             this.showStep(this.shownBreadcrumbStepNames[0]);
         }
+        getStepsDataObject() {
+            return this.stepsDataObject;
+        }
         /**
          * Reads all children elements of specified parent that are used in this class instance and stores them for future use
          * @param {Element} containerElement Parent element
@@ -198,7 +201,7 @@
                         throw new Error(`Step with name ${stepName} already exists`);
                     }
                     const controller = this.createControllerInstance(controllerName);
-                    controller.init(containerEl, null, (stepNameParam, stepData, element) => this.stepCompleted(stepNameParam, stepData, element));
+                    controller.init(containerEl, null, (stepNameParam, stepData, element) => this.stepCompleted(stepNameParam, stepData, element), this);
                     this.controllers.push({ stepName: stepName, controllerName: controllerName, controller: controller });
                 }
                 else {
@@ -261,17 +264,23 @@
      * Manages simple step which contains clickable items
      */
     class StepsClickableItemsController {
-        init(containerEl, data, stepCompletedCallback) {
+        init(containerEl, data, stepCompletedCallback, manager) {
             const stepName = containerEl.getAttribute('step-name');
             // Attach to click event of the clickable elements so we can detect which item was clicked
             const clickableItemsEls = containerEl.querySelectorAll('[step-clickable-item]');
             clickableItemsEls.forEach(el => {
                 el.addEventListener('click', event => {
                     const currentTargetEl = event.currentTarget;
-                    const dataAttribute = currentTargetEl.getAttribute('step-clickable-item-data');
-                    if (dataAttribute) {
-                        const json = JSON.parse(dataAttribute);
-                        stepCompletedCallback(stepName, json, currentTargetEl);
+                    const dataAttributeValue = currentTargetEl.getAttribute('step-clickable-item-data');
+                    if (dataAttributeValue) {
+                        let stepResult;
+                        try {
+                            stepResult = JSON.parse(dataAttributeValue);
+                        }
+                        catch (err) {
+                            stepResult = dataAttributeValue;
+                        }
+                        stepCompletedCallback(stepName, stepResult, currentTargetEl);
                     }
                 });
             });
@@ -283,8 +292,10 @@
     class StepsSearchBrandController {
         constructor() {
             this.searchPath = '';
+            this.stepsManager = null;
         }
-        init(containerEl, data, stepCompletedCallback) {
+        init(containerEl, data, stepCompletedCallback, manager) {
+            this.stepsManager = manager;
             const stepName = containerEl.getAttribute('step-name');
             this.searchPath = containerEl.getAttribute('step-search-brand-search-path');
             const inputEl = containerEl.querySelector('[step-search-brand-input]');
@@ -315,8 +326,10 @@
         }
         async performSearch(path, text) {
             // TODO: Construct real search object for the server and use correct url (it can be provided in the HTML template)
+            const stepsDataObject = this.stepsManager?.getStepsDataObject();
             const bodyObj = {
-                searchText: text
+                searchText: text,
+                stepsSelections: stepsDataObject
             };
             const respose = await fetch(path, {
                 method: 'POST',
