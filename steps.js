@@ -9,6 +9,10 @@
                 allBreadcrumbItems: null,
                 allSteps: null
             };
+            this.wellKnownControllers = {
+                [StepsClickableItemsController.name]: StepsClickableItemsController,
+                [StepsSearchBrandController.name]: StepsSearchBrandController
+            };
             this.controllers = [];
             this.stepsName = '';
             this.allStepNames = [];
@@ -216,22 +220,19 @@
             if (!controllerName || !controllerName.trim()) {
                 return undefined;
             }
-            // TODO: Find a way to create non-global class instance by providing the class name
-            let controller;
-            if (controllerName === 'ClickableItemsController') {
-                controller = new ClickableItemsController();
+            // Locally defined well-known controllers have precedence over globally defined ones
+            const controllerConstructorFn = this.wellKnownControllers[controllerName];
+            if (controllerConstructorFn) {
+                return new controllerConstructorFn();
             }
-            else if (controllerName === 'SearchBrandController') {
-                controller = new SearchBrandController();
+            else {
+                return new window[controllerName]();
             }
-            return controller;
         }
     }
     class DOMHelper {
         addClass(element, className) {
-            if (!element.classList.contains(className)) {
-                element.classList.add(className);
-            }
+            element.classList.add(className);
         }
         removeClass(element, className) {
             element.classList.remove(className);
@@ -259,7 +260,7 @@
     /**
      * Manages simple step which contains clickable items
      */
-    class ClickableItemsController {
+    class StepsClickableItemsController {
         init(containerEl, data, stepCompletedCallback) {
             const stepName = containerEl.getAttribute('step-name');
             // Attach to click event of the clickable elements so we can detect which item was clicked
@@ -279,7 +280,7 @@
     /**
      * Manages search brand step
      */
-    class SearchBrandController {
+    class StepsSearchBrandController {
         constructor() {
             this.searchPath = '';
         }

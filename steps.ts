@@ -7,6 +7,10 @@
             allBreadcrumbItems: null as any,
             allSteps: null as any
         };
+        wellKnownControllers = {
+            [StepsClickableItemsController.name]: StepsClickableItemsController,
+            [StepsSearchBrandController.name]: StepsSearchBrandController
+        } as any;
         controllers: any[] = [];
         stepsName = '';
         allStepNames: string[] = [];
@@ -230,14 +234,13 @@
             if (!controllerName || !controllerName.trim()) {
                 return undefined;
             }
-            // TODO: Find a way to create non-global class instance by providing the class name
-            let controller;
-            if (controllerName === 'ClickableItemsController') {
-                controller = new ClickableItemsController();
-            } else if (controllerName === 'SearchBrandController') {
-                controller = new SearchBrandController();
+            // Locally defined well-known controllers have precedence over globally defined ones
+            const controllerConstructorFn = this.wellKnownControllers[controllerName];
+            if (controllerConstructorFn) {
+                return new controllerConstructorFn();
+            } else {
+                return new (window as any)[controllerName]();
             }
-            return controller;
         }
     }
 
@@ -251,9 +254,7 @@
 
     class DOMHelper {
         addClass(element: Element, className: string): void {
-            if (!element.classList.contains(className)) {
-                element.classList.add(className);
-            }
+            element.classList.add(className);
         }
 
         removeClass(element: Element, className: string): void {
@@ -289,7 +290,7 @@
     /**
      * Manages simple step which contains clickable items
      */
-    class ClickableItemsController {
+    class StepsClickableItemsController {
         init(containerEl: Element, data: any, stepCompletedCallback: StepCompletedCallback): void {
             const stepName = containerEl.getAttribute('step-name');
             // Attach to click event of the clickable elements so we can detect which item was clicked
@@ -310,7 +311,7 @@
     /**
      * Manages search brand step
      */
-    class SearchBrandController {
+    class StepsSearchBrandController {
         searchPath: string | null = '';
         init(containerEl: Element, data: any, stepCompletedCallback: StepCompletedCallback) {
             const stepName = containerEl.getAttribute('step-name');

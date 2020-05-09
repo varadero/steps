@@ -19,7 +19,7 @@
         </div>
 
         <div class="steps-templates">
-            <div step-name="genderStep" step-text="Пол" step-controller="ClickableItemsController"
+            <div step-name="genderStep" step-text="Пол" step-controller="StepsClickableItemsController"
                 class="step gender-step clickable-items-step">
                 <div step-clickable-item step-clickable-item-data='{"selected": "female"}'
                     step-clickable-item-goes-to-step="femaleStep" class="clickable-item">
@@ -33,7 +33,7 @@
                 </div>
             </div>
 
-            <div step-name="femaleStep" step-text="Дамски" step-controller="ClickableItemsController"
+            <div step-name="femaleStep" step-text="Дамски" step-controller="StepsClickableItemsController"
                 class="step female-step clickable-items-step">
                 <div step-clickable-item step-clickable-item-data='{"selected": "bluzi"}'
                     step-clickable-item-goes-to-step="searchStep" class="clickable-item">
@@ -47,7 +47,7 @@
                 </div>
             </div>
 
-            <div step-name="maleStep" step-text="Мъжки" step-controller="ClickableItemsController"
+            <div step-name="maleStep" step-text="Мъжки" step-controller="StepsClickableItemsController"
                 class="step male-step clickable-items-step">
                 <div step-clickable-item step-clickable-item-data='{"selected": "gashti"}'
                     step-clickable-item-goes-to-step="searchStep" class="clickable-item">
@@ -61,7 +61,7 @@
                 </div>
             </div>
 
-            <div step-name="maleOutdoorStep" step-text="Връхна дреха" step-controller="ClickableItemsController"
+            <div step-name="maleOutdoorStep" step-text="Връхна дреха" step-controller="StepsClickableItemsController"
                 class="step male-step clickable-items-step">
                 <div step-clickable-item step-clickable-item-data='{"selected": "jacket"}'
                     step-clickable-item-goes-to-step="searchStep" class="clickable-item">
@@ -80,7 +80,7 @@
                 </div>
             </div>
 
-            <div step-name="searchStep" step-text="Search brand" step-controller="SearchBrandController"
+            <div step-name="searchStep" step-text="Search brand" step-controller="StepsSearchBrandController"
                 step-search-brand-search-path="search-brand.php" class="step search-brand-step clickable-items-step">
                 <div>
                     <div>
