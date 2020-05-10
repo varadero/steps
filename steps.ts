@@ -317,7 +317,7 @@
                         } catch (err) {
                             stepResult = dataAttributeValue;
                         }
-                        const nextStepName = currentTargetEl.getAttribute('step-clickable-item-goes-to-step');
+                        const nextStepName = currentTargetEl.getAttribute('step-clickable-item-goes-to-step')!;
                         stepCompletedCallback(stepName!, stepResult, nextStepName);
                     }
                 });

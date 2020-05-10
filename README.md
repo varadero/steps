@@ -1,5 +1,8 @@
 # Steps
 
+## Online sample
+https://varadero.github.io/steps/
+
 ## Installation
 `git clone https://github.com/varadero/steps.git`
 
@@ -171,4 +174,3 @@ Parameters that library passes to `init` finction:
 ```javascript
 stepCompletedCallback(stepName, stepResult, nextStepName);
 ```
-
