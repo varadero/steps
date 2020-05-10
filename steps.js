@@ -35,6 +35,9 @@
             this.showBreadcrumbSteps(this.shownBreadcrumbStepNames);
             this.showStep(this.shownBreadcrumbStepNames[0]);
         }
+        getStepsName() {
+            return this.stepsName;
+        }
         getStepsDataObject() {
             return this.stepsDataObject;
         }
@@ -201,7 +204,7 @@
                         throw new Error(`Step with name ${stepName} already exists`);
                     }
                     const controller = this.createControllerInstance(controllerName);
-                    controller.init(containerEl, null, (stepNameParam, stepData, element) => this.stepCompleted(stepNameParam, stepData, element), this);
+                    controller.init(containerEl, null, (stepNameParam, stepData, nextStepName) => this.stepCompleted(stepNameParam, stepData, nextStepName), this);
                     this.controllers.push({ stepName: stepName, controllerName: controllerName, controller: controller });
                 }
                 else {
@@ -209,13 +212,14 @@
                 }
             });
         }
-        stepCompleted(stepName, stepData, element) {
+        stepCompleted(stepName, stepData, nextStepName) {
             // Step controller reports that it is completed
-            const nextStepName = this.domHelper.getAttr(element, 'step-clickable-item-goes-to-step');
             // Maintain steps data object
             this.stepsDataObject[stepName] = stepData;
-            this.showStep(nextStepName);
-            this.shownBreadcrumbStepNames.push(nextStepName);
+            if (nextStepName) {
+                this.showStep(nextStepName);
+                this.shownBreadcrumbStepNames.push(nextStepName);
+            }
             this.showBreadcrumbSteps(this.shownBreadcrumbStepNames);
             // this.stepsDataObject contains collected data from all completed steps
         }
@@ -280,7 +284,8 @@
                         catch (err) {
                             stepResult = dataAttributeValue;
                         }
-                        stepCompletedCallback(stepName, stepResult, currentTargetEl);
+                        const nextStepName = currentTargetEl.getAttribute('step-clickable-item-goes-to-step');
+                        stepCompletedCallback(stepName, stepResult, nextStepName);
                     }
                 });
             });
